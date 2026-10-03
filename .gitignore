@@ -1,0 +1,35 @@
+﻿# Python
+.venv/
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+
+# IDE
+.idea/
+.vscode/
+
+# Local backups / temporary files
+*.tmp
+*.bak
+*.backup
+*.old
+*.zip
+
+# Versioned local backups created during development
+*.v*
+
+# Local debug artifacts
+backend/prompt_debug.txt
+backend/analyze_openai.json
+
+# Local test artifacts
+__write_test.txt
+
+# OS
+.DS_Store
+Thumbs.db

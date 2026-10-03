@@ -1,0 +1,468 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#17191e" />
+  <meta name="description" content="Evidence-grounded company, market, and job intelligence." />
+  <title>AI-OSINT-Agent | Company Intelligence Dashboard</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+
+<body>
+  <div class="app-shell">
+
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">AI OSINT ANALYST</p>
+        <h1>Company Intelligence Dashboard</h1>
+        <p class="subtitle">
+          Evidence-grounded company, market, and job intelligence.
+        </p>
+      </div>
+
+      <div class="api-badge" id="apiBadge" title="Backend API status">
+        API: 8008
+      </div>
+    </header>
+
+    <main>
+
+      <!-- Search -->
+      <section class="search-panel panel">
+        <form id="searchForm">
+
+          <label for="keyword">
+            Target company
+          </label>
+
+          <div class="search-row">
+            <input
+              id="keyword"
+              name="keyword"
+              type="text"
+              value="OpenAI"
+              placeholder="e.g. OpenAI"
+              autocomplete="off"
+              required
+            />
+
+            <button
+              id="analyzeButton"
+              type="submit"
+            >
+              Analyze
+            </button>
+          </div>
+
+          <div class="status-row">
+            <span id="statusText">
+              Ready
+            </span>
+
+            <span id="durationText"></span>
+          </div>
+
+        </form>
+      </section>
+
+      <!-- Loading -->
+      <section
+        id="loadingState"
+        class="loading panel hidden"
+        aria-live="polite"
+      >
+        <div class="spinner"></div>
+
+        <div>
+          <strong>
+            Analyzing company intelligence…
+          </strong>
+
+          <p>
+            Searching public data, validating evidence,
+            and building claims.
+          </p>
+        </div>
+      </section>
+
+      <!-- Error -->
+      <section
+        id="errorState"
+        class="error panel hidden"
+        aria-live="assertive"
+      >
+        <strong>
+          Analysis failed
+        </strong>
+
+        <p id="errorText"></p>
+
+        <button
+          id="retryButton"
+          type="button"
+          class="secondary"
+        >
+          Retry
+        </button>
+      </section>
+
+      <!-- Dashboard -->
+      <section
+        id="dashboard"
+        class="hidden"
+      >
+
+        <!-- Overview -->
+        <div class="hero-grid">
+
+          <article class="panel overview-card">
+
+            <div class="section-heading">
+
+              <div>
+                <p class="eyebrow">
+                  OVERVIEW
+                </p>
+
+                <h2 id="companyName">
+                  —
+                </h2>
+              </div>
+
+              <span
+                class="pill"
+                id="evidenceCount"
+              >
+                0 evidence
+              </span>
+
+            </div>
+
+            <p
+              id="overviewSummary"
+              class="overview-text"
+            >
+              —
+            </p>
+
+          </article>
+
+          <!-- Metrics -->
+          <article class="panel metric-card">
+
+            <p class="eyebrow">
+              SIGNALS
+            </p>
+
+            <div class="metric-row">
+              <span>News</span>
+              <strong id="newsCount">0</strong>
+            </div>
+
+            <div class="metric-row">
+              <span>GitHub</span>
+              <strong id="githubCount">0</strong>
+            </div>
+
+            <div class="metric-row">
+              <span>Claims</span>
+              <strong id="claimCount">0</strong>
+            </div>
+
+            <div class="metric-row">
+              <span>P1 Recommendations</span>
+              <strong id="p1Count">0</strong>
+            </div>
+
+            <div class="metric-row">
+              <span>Priority Debug</span>
+              <strong id="priorityDebug">—</strong>
+            </div>
+
+          </article>
+
+        </div>
+
+        <!-- News / GitHub -->
+        <div class="two-column">
+
+          <!-- News -->
+          <section class="panel">
+
+            <div class="section-heading">
+
+              <div>
+                <p class="eyebrow">
+                  NEWS SIGNALS
+                </p>
+
+                <h2>
+                  Recent news
+                </h2>
+              </div>
+
+            </div>
+
+            <!-- News filters -->
+            <div
+              id="newsFilters"
+              class="filter-row"
+            >
+              <button
+                type="button"
+                class="filter-button active"
+                data-filter="all"
+              >
+                All
+              </button>
+
+              <button
+                type="button"
+                class="filter-button"
+                data-filter="direct"
+              >
+                Direct
+              </button>
+
+              <button
+                type="button"
+                class="filter-button"
+                data-filter="competitive"
+              >
+                Competitive
+              </button>
+
+              <button
+                type="button"
+                class="filter-button"
+                data-filter="industry"
+              >
+                Industry
+              </button>
+            </div>
+
+            <div
+              id="newsList"
+              class="card-list"
+            ></div>
+
+          </section>
+
+          <!-- GitHub -->
+          <section class="panel">
+
+            <div class="section-heading">
+
+              <div>
+                <p class="eyebrow">
+                  GITHUB SIGNALS
+                </p>
+
+                <h2>
+                  Technical signals
+                </h2>
+              </div>
+
+            </div>
+
+            <!-- GitHub filters -->
+            <div
+              id="githubFilters"
+              class="filter-row"
+            >
+              <button
+                type="button"
+                class="filter-button active"
+                data-filter="all"
+              >
+                All
+              </button>
+
+              <button
+                type="button"
+                class="filter-button"
+                data-filter="direct"
+              >
+                Direct
+              </button>
+
+              <button
+                type="button"
+                class="filter-button"
+                data-filter="ecosystem"
+              >
+                Ecosystem
+              </button>
+            </div>
+
+            <div
+              id="githubList"
+              class="card-list"
+            ></div>
+
+          </section>
+
+        </div>
+
+        <!-- Claims -->
+        <section class="panel">
+
+          <div class="section-heading">
+
+            <div>
+              <p class="eyebrow">
+                CLAIMS
+              </p>
+
+              <h2>
+                Evidence-backed claims
+              </h2>
+            </div>
+
+            <span class="pill">
+              Backend-scored confidence
+            </span>
+
+          </div>
+
+          <div
+            id="claimsList"
+            class="claims-list"
+          ></div>
+
+        </section>
+
+        <section class="panel">
+
+          <div class="section-heading">
+
+            <div>
+              <p class="eyebrow">
+                TOP RECOMMENDATIONS
+              </p>
+
+              <h2>
+                Highest-priority career recommendations
+              </h2>
+            </div>
+
+            <span class="pill">
+              Backend-ranked Top 5
+            </span>
+
+          </div>
+
+          <div
+            id="topRecommendationsList"
+            class="top-recommendations-list"
+          ></div>
+
+        </section>
+
+        <!-- Job Value -->
+        <section class="panel">
+
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">JOB VALUE</p>
+            <h2>What this means for your career</h2>
+          </div>
+
+          <span class="pill">
+            Evidence-backed recommendations
+          </span>
+        </div>
+
+        <div class="recommendation-section">
+
+          <div class="recommendation-group">
+            <p class="job-card-label">JOB DIRECTIONS</p>
+            <div id="jobDirections" class="recommendation-list"></div>
+          </div>
+
+          <div class="recommendation-group">
+            <p class="job-card-label">TECHNICAL SKILLS</p>
+            <div id="technicalSkills" class="recommendation-list"></div>
+          </div>
+
+          <div class="recommendation-group">
+            <p class="job-card-label">IMPORTANT AREAS</p>
+            <div id="importantAreas" class="recommendation-list"></div>
+          </div>
+
+        </div>
+
+      </section>
+
+        <!-- Interview Preparation -->
+        <section class="panel">
+
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">INTERVIEW PREPARATION</p>
+            <h2>Prepare for the interview</h2>
+          </div>
+
+          <span class="pill">
+            Claim-linked preparation
+          </span>
+        </div>
+
+        <div class="recommendation-section">
+
+          <div class="recommendation-group">
+            <p class="job-card-label">TOPICS</p>
+            <div id="interviewTopics" class="recommendation-list"></div>
+          </div>
+
+          <div class="recommendation-group">
+            <p class="job-card-label">PRACTICAL TASKS</p>
+            <div id="interviewTasks" class="recommendation-list"></div>
+          </div>
+
+        </div>
+
+      </section>
+
+        <!-- Evidence -->
+        <section class="panel">
+
+          <div class="section-heading">
+
+            <div>
+              <p class="eyebrow">
+                EVIDENCE
+              </p>
+
+              <h2>
+                Source registry
+              </h2>
+            </div>
+
+          </div>
+
+          <div
+            id="evidenceList"
+            class="evidence-list"
+          ></div>
+
+        </section>
+
+      </section>
+
+    </main>
+
+    <footer>
+      <span>
+        AI-OSINT-Agent ? Frontend
+      </span>
+
+      <span id="lastUpdated"></span>
+    </footer>
+
+  </div>
+
+  <script src="./app.js" defer></script>
+</body>
+</html>
