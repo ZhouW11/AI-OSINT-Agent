@@ -309,6 +309,21 @@ AI-OSINT-Agent/
 
 ---
 
+## Demo
+
+### Dashboard
+
+![AI-OSINT-Agent Dashboard](docs/assets/dashboard-overview.png)
+
+### Evidence Traceability
+
+![Evidence and Claim Traceability](docs/assets/evidence-traceability.png)
+
+### API Documentation
+
+![FastAPI API Documentation](docs/assets/api-docs.png)
+
+
 ## Quick Start
 
 ### Backend
