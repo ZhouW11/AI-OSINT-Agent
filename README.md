@@ -10,6 +10,20 @@ The project focuses on a practical problem in AI-assisted company research:
 
 ---
 
+## Demo
+
+### Dashboard
+
+![AI-OSINT-Agent Dashboard](docs/assets/dashboard-overview.png)
+
+### Evidence Traceability
+
+![Evidence and Claim Traceability](docs/assets/evidence-traceability.png)
+
+### API Documentation
+
+![FastAPI API Documentation](docs/assets/api-docs.png)
+
 ## Overview
 
 AI-OSINT-Agent is designed for company research and job-seeking intelligence.
@@ -308,20 +322,6 @@ AI-OSINT-Agent/
 ```
 
 ---
-
-## Demo
-
-### Dashboard
-
-![AI-OSINT-Agent Dashboard](docs/assets/dashboard-overview.png)
-
-### Evidence Traceability
-
-![Evidence and Claim Traceability](docs/assets/evidence-traceability.png)
-
-### API Documentation
-
-![FastAPI API Documentation](docs/assets/api-docs.png)
 
 
 ## Quick Start
